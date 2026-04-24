@@ -1,20 +1,71 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Nuru Coaching Auth Portal
 
-# Run and deploy your AI Studio app
+An elegant, editorial-inspired authentication portal designed for Nuru Coaching. This application provides a sophisticated user experience for logging in, signing up, and managing account access.
 
-This contains everything you need to run your app locally.
+## Features
 
-View your app in AI Studio: https://ai.studio/apps/0188327b-814f-4240-8843-9855e5ca8d31
+- **Modern Editorial Aesthetic**: High-contrast design with a teal-and-white palette (`#105554`), serif typography, and curated imagery.
+- **Firebase Integration**: Full authentication suite using Firebase Auth.
+  - Email/Password Login & Signup.
+  - Social Login (Google & Facebook).
+  - Password Reset flow.
+- **Security First**: 
+  - Real-time password strength indicator (Entropy Score).
+  - Character limits (6-15) enforced on password fields.
+  - Secure session management.
+- **Responsive Design**: Fluid layout that adapts seamlessly from ultra-wide desktops to mobile devices.
+- **Motion UI**: Smooth transitions and stagger animations using `motion/react` for a premium feel.
 
-## Run Locally
+## Tech Stack
 
-**Prerequisites:**  Node.js
+- **Framework**: React 18+ with Vite
+- **Styling**: Tailwind CSS
+- **Animations**: Motion (formerly Framer Motion)
+- **Database/Auth**: Firebase
+- **Icons**: Lucide React
+- **Typography**: Playfair Display (Serif) & Inter (Sans-serif)
 
+## Getting Started
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### Prerequisites
+
+- Node.js (v18 or higher)
+- A Firebase Project
+
+### Installation
+
+1. Clone the repository (once exported to GitHub):
+   ```bash
+   git clone <your-repo-url>
+   cd nuru-coaching-auth
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Configure Firebase:
+   Update `firebase-applet-config.json` with your Firebase project credentials.
+
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Design System
+
+- **Primary Color**: `#105554` (Nuru Teal)
+- **Background**: `#FFFFFF`
+- **Typography**: 
+  - Headlines: `Playfair Display`
+  - Body/UI: `Inter`
+- **Components**: Rounded inputs (full radius), rounded-full buttons, and bento-inspired card layout.
+
+## Deployment
+
+To deploy this application, you can use the built-in Cloud Run deployment in Google AI Studio or export the code to your preferred static hosting provider like Vercel, Netlify, or Firebase Hosting.
+
+---
+
+*Crafted with precision for the Nuru Collective &copy; 2026*

@@ -230,6 +230,8 @@ export default function App() {
                       <input 
                         type="password" 
                         required
+                        minLength={6}
+                        maxLength={15}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="w-full bg-white/5 border border-white/10 rounded-full py-4 px-6 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all font-sans text-base text-white placeholder:text-white/20"
@@ -353,9 +355,10 @@ export default function App() {
                         Password
                       </label>
                       <input 
-                        required
                         type="password" 
+                        required
                         minLength={6}
+                        maxLength={15}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="w-full bg-white/5 border border-white/10 rounded-full py-4 px-6 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all font-sans text-base text-white placeholder:text-white/20"
