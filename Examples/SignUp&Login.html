@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Auth UI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#1e1e1e] flex items-center justify-center min-h-screen text-white">
+
+<div class="w-[900px] bg-[#2a2a2a] p-6 rounded-xl shadow-2xl">
+
+  <!-- Toggle -->
+  <div class="flex gap-4 mb-6">
+    <button onclick="showLogin()" class="bg-gray-700 px-4 py-2 rounded-lg">Login Page</button>
+    <button onclick="showSignup()" class="bg-gray-700 px-4 py-2 rounded-lg">Sign Up Page</button>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="loginPage" class="flex bg-[#0f5f5c] rounded-xl overflow-hidden">
+
+    <!-- Image -->
+    <div class="w-1/2">
+      <img src="https://images.unsplash.com/photo-1551434678-e076c223a692"
+           class="h-full w-full object-cover">
+    </div>
+
+    <!-- Form -->
+    <div class="w-1/2 p-8">
+      <h2 class="text-2xl font-bold mb-2">Welcome Back</h2>
+      <p class="text-sm text-gray-300 mb-6">Don't have an account yet?</p>
+
+      <form class="space-y-4" onsubmit="login(event)">
+        <input type="email" placeholder="Email"
+          class="w-full p-3 rounded-lg bg-[#2c7a78] placeholder-gray-300 outline-none">
+
+        <input type="password" placeholder="Password"
+          class="w-full p-3 rounded-lg bg-[#2c7a78] placeholder-gray-300 outline-none">
+
+        <button class="w-full bg-black py-3 rounded-lg font-semibold">
+          LOGIN
+        </button>
+      </form>
+
+      <p class="text-xs mt-4 text-gray-300">Forgot password?</p>
+      <p id="loginMsg" class="mt-2 text-sm"></p>
+    </div>
+  </div>
+
+  <!-- SIGNUP -->
+  <div id="signupPage" class="hidden flex bg-[#0f5f5c] rounded-xl overflow-hidden mt-6">
+
+    <!-- Image -->
+    <div class="w-1/2">
+      <img src="https://images.unsplash.com/photo-1551434678-e076c223a692"
+           class="h-full w-full object-cover">
+    </div>
+
+    <!-- Form -->
+    <div class="w-1/2 p-8">
+      <h2 class="text-2xl font-bold mb-2">Create an account</h2>
+
+      <form class="space-y-3" onsubmit="signup(event)">
+        <input type="text" placeholder="Full Name"
+          class="w-full p-2 rounded-lg bg-[#2c7a78] outline-none">
+
+        <input type="email" placeholder="Email"
+          class="w-full p-2 rounded-lg bg-[#2c7a78] outline-none">
+
+        <input type="password" placeholder="Password"
+          class="w-full p-2 rounded-lg bg-[#2c7a78] outline-none">
+
+        <input type="password" placeholder="Confirm Password"
+          class="w-full p-2 rounded-lg bg-[#2c7a78] outline-none">
+
+        <label class="text-xs flex items-center gap-2">
+          <input type="checkbox"> I agree to Terms & Conditions
+        </label>
+
+        <button class="w-full bg-black py-2 rounded-lg font-semibold">
+          SIGN UP
+        </button>
+      </form>
+
+      <p id="signupMsg" class="mt-2 text-sm"></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const loginPage = document.getElementById("loginPage");
+  const signupPage = document.getElementById("signupPage");
+  
+  // Initial states
+  loginPage.style.transform = "translateX(0)";
+  signupPage.style.transform = "translateX(100%)";
+  
+  loginPage.style.transition = "all 0.5s ease";
+  signupPage.style.transition = "all 0.5s ease";
+  
+  function showSignup() {
+    signupPage.classList.remove("hidden");
+  
+    // Animate
+    loginPage.style.transform = "translateX(-100%)";
+    loginPage.style.opacity = "0";
+  
+    signupPage.style.transform = "translateX(0)";
+    signupPage.style.opacity = "1";
+  }
+  
+  function showLogin() {
+    loginPage.classList.remove("hidden");
+  
+    // Animate
+    loginPage.style.transform = "translateX(0)";
+    loginPage.style.opacity = "1";
+  
+    signupPage.style.transform = "translateX(100%)";
+    signupPage.style.opacity = "0";
+  }
+  
+  // Optional: reset hidden after animation
+  setTimeout(() => {
+    if (signupPage.style.opacity === "0") {
+      signupPage.classList.add("hidden");
+    }
+    if (loginPage.style.opacity === "0") {
+      loginPage.classList.add("hidden");
+    }
+  }, 600);
+  </script>
+
+</body>
+</html>
