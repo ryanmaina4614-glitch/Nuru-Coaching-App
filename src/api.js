@@ -1,21 +1,11 @@
 /**
- * Custom API Service for Nuru Coaching
- * Replace the placeholder URLs and logic with your actual backend integration.
+ * Custom API Service for Nuru Coaching (Vanilla JS)
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://api.example.com';
-
-export interface AuthResponse {
-  user: {
-    uid: string;
-    email: string;
-    displayName?: string;
-  };
-  token: string;
-}
+const API_BASE_URL = window.VITE_API_URL || 'https://api.example.com';
 
 export const api = {
-  async login(email: string, password: string): Promise<AuthResponse> {
+  async login(email, password) {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -30,7 +20,7 @@ export const api = {
     return response.json();
   },
 
-  async signup(email: string, password: string, name: string): Promise<AuthResponse> {
+  async signup(email, password, name) {
     const response = await fetch(`${API_BASE_URL}/auth/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -45,7 +35,7 @@ export const api = {
     return response.json();
   },
 
-  async resetPassword(email: string): Promise<void> {
+  async resetPassword(email) {
     const response = await fetch(`${API_BASE_URL}/auth/reset-password`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -58,7 +48,7 @@ export const api = {
     }
   },
 
-  async getMe(token: string): Promise<AuthResponse['user']> {
+  async getMe(token) {
     const response = await fetch(`${API_BASE_URL}/auth/me`, {
       headers: {
         'Authorization': `Bearer ${token}`
@@ -72,8 +62,7 @@ export const api = {
     return response.json();
   },
 
-  // Example for social login redirection or callback handling
-  async socialLogin(provider: 'google' | 'facebook'): Promise<void> {
+  async socialLogin(provider) {
     window.location.href = `${API_BASE_URL}/auth/${provider}`;
   }
 };
