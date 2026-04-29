@@ -4,15 +4,16 @@ An elegant, editorial-inspired authentication portal designed for Nuru Coaching.
 
 ## Features
 
+- **Custom Backend Ready**: Pre-architected to connect with your own API for authentication and user management.
 - **Modern Editorial Aesthetic**: High-contrast design with a teal-and-white palette (`#105554`), serif typography, and curated imagery.
-- **Firebase Integration**: Full authentication suite using Firebase Auth.
+- **Authentication Suite**:
   - Email/Password Login & Signup.
-  - Social Login (Google & Facebook).
+  - Social Login placeholders (Google & Facebook).
   - Password Reset flow.
 - **Security First**: 
   - Real-time password strength indicator (Entropy Score).
   - Character limits (6-15) enforced on password fields.
-  - Secure session management.
+  - Token-based session management (Bearer Token).
 - **Responsive Design**: Fluid layout that adapts seamlessly from ultra-wide desktops to mobile devices.
 - **Motion UI**: Smooth transitions and stagger animations using `motion/react` for a premium feel.
 
@@ -21,7 +22,7 @@ An elegant, editorial-inspired authentication portal designed for Nuru Coaching.
 - **Framework**: React 18+ with Vite
 - **Styling**: Tailwind CSS
 - **Animations**: Motion (formerly Framer Motion)
-- **Database/Auth**: Firebase
+- **API Communication**: Fetch API (Bearer Token Auth)
 - **Icons**: Lucide React
 - **Typography**: Playfair Display (Serif) & Inter (Sans-serif)
 
@@ -30,7 +31,7 @@ An elegant, editorial-inspired authentication portal designed for Nuru Coaching.
 ### Prerequisites
 
 - Node.js (v18 or higher)
-- A Firebase Project
+- A custom backend API (Node.js, Python, Go, etc.)
 
 ### Installation
 
@@ -45,13 +46,26 @@ An elegant, editorial-inspired authentication portal designed for Nuru Coaching.
    npm install
    ```
 
-3. Configure Firebase:
-   Update `firebase-applet-config.json` with your Firebase project credentials.
+3. Configure Backend:
+   Create a `.env` file in the root directory and add your API URL:
+   ```env
+   VITE_API_URL=https://your-api-endpoint.com
+   ```
 
 4. Start the development server:
    ```bash
    npm run dev
    ```
+
+## Custom Backend Integration
+
+The app uses a modular API service located in `src/lib/api.ts`. You can easily adjust the endpoints and request/response structures to match your backend.
+
+Expected Endpoints:
+- `POST /auth/login`: `{ email, password }` -> `{ user, token }`
+- `POST /auth/signup`: `{ email, password, name }` -> `{ user, token }`
+- `POST /auth/reset-password`: `{ email }` -> `void`
+- `GET /auth/me`: `headers: { Authorization: Bearer <token> }` -> `{ user }`
 
 ## Design System
 

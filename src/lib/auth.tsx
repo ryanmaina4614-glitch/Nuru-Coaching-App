@@ -1,20 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { 
-  onAuthStateChanged, 
-  User, 
-  setPersistence, 
-  browserLocalPersistence, 
-  browserSessionPersistence,
-  sendPasswordResetEmail,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  updateProfile,
-  signOut,
-  GoogleAuthProvider,
-  FacebookAuthProvider,
-  signInWithPopup
-} from 'firebase/auth';
-import { auth } from './firebase';
+import { api } from './api';
+
+interface User {
+  uid: string;
+  email: string;
+  displayName?: string;
+}
 
 interface AuthContextType {
   user: User | null;
@@ -34,39 +25,50 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    const checkAuth = async () => {
+      const token = localStorage.getItem('auth_token');
+      if (token) {
+        try {
+          const userData = await api.getMe(token);
+          setUser(userData);
+        } catch (error) {
+          console.error('Session expired', error);
+          localStorage.removeItem('auth_token');
+        }
+      }
       setLoading(false);
-    });
-    return unsubscribe;
+    };
+
+    checkAuth();
   }, []);
 
   const login = async (email: string, password: string, rememberMe: boolean) => {
-    await setPersistence(
-      auth, 
-      rememberMe ? browserLocalPersistence : browserSessionPersistence
-    );
-    await signInWithEmailAndPassword(auth, email, password);
+    const { user: userData, token } = await api.login(email, password);
+    setUser(userData);
+    if (rememberMe) {
+      localStorage.setItem('auth_token', token);
+    } else {
+      sessionStorage.setItem('auth_token', token);
+    }
   };
 
   const signup = async (email: string, password: string, displayName: string) => {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(userCredential.user, { displayName });
+    const { user: userData, token } = await api.signup(email, password, displayName);
+    setUser(userData);
+    localStorage.setItem('auth_token', token);
   };
 
-  const logout = () => signOut(auth);
-
-  const resetPassword = (email: string) => sendPasswordResetEmail(auth, email);
-
-  const signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+  const logout = async () => {
+    setUser(null);
+    localStorage.removeItem('auth_token');
+    sessionStorage.removeItem('auth_token');
   };
 
-  const signInWithFacebook = async () => {
-    const provider = new FacebookAuthProvider();
-    await signInWithPopup(auth, provider);
-  };
+  const resetPassword = (email: string) => api.resetPassword(email);
+
+  const signInWithGoogle = () => api.socialLogin('google');
+
+  const signInWithFacebook = () => api.socialLogin('facebook');
 
   return (
     <AuthContext.Provider value={{ 
